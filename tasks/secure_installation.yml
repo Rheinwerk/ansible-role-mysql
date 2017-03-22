@@ -1,0 +1,8 @@
+---
+
+- name: Remove anonymous MySQL users.
+  mysql_user: name="" state=absent login_user=root login_password="{{ _mysql.root.password }}"
+
+- name: Remove MySQL test database.
+  mysql_db: name=test state=absent login_user=root login_password="{{ _mysql.root.password }}"
+
