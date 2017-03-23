@@ -19,6 +19,7 @@ install:
   # Check ansible version
   - ansible --version
 
+  - dpkg -l | grep mysql
 script:
   # Basic role syntax check
   - cd tests; ansible-playbook test.yml -i inventory --syntax-check

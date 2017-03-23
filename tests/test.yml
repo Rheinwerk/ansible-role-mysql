@@ -32,7 +32,7 @@
   pre_tasks:
     # This is necessary because Travis already installed mysql client 5.6.
     - name: Remove already Installed MySQL Packages
-      shell: apt-get purge mysql-client-core-5.6 && apt-get autoremove && apt-get autoclean
+      shell: apt-get purge mysql-client-core-5.6 mysql-server-core-5.6 && apt-get autoremove && apt-get autoclean
   roles:
     - { role: ansible-role-mysql, tags: ['mysql'], _mysql: "{{ MYSQL }}" }
 
