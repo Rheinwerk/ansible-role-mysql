@@ -35,6 +35,12 @@
       shell: apt-get purge mysql-client-5.6 mysql-client-core-5.6 mysql-server-5.6 mysql-server-core-5.6 mysql-common-5.6 mysql-common && apt-get autoremove && apt-get autoclean
     - name: Remove garbage
       shell: rm /var/lib/mysql/debian-*.flag
+    - name: Remove default dirs created by package
+      file: name="{{ item }}" state=absent
+      with_items:
+        - /var/lib/mysql
+        - /var/log/mysql
+        - /var/log/mysqld.log
   roles:
     - { role: ansible-role-mysql, tags: ['mysql'], _mysql: "{{ MYSQL }}" }
 
