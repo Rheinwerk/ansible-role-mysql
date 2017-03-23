@@ -3,7 +3,7 @@
 - name: Install MySQL
   apt: pkg={{ item }} state=present
   with_items:
-    - mysql-server
+    - mysql-server-5.5
     - python-mysqldb
   notify:
     - Restart MySQL
