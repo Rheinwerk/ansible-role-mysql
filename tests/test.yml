@@ -29,6 +29,10 @@
       databases:
         wordpress:
           state: present
+  pre_tasks:
+    # This is necessary because Travis already installed mysql client 5.6.
+    - name: Remove already Installed MySQL Packages
+      shell: sudo apt-get purge mysql-client-core-5.6 && sudo apt-get autoremove && sudo apt-get autoclean
   roles:
     - { role: ansible-role-mysql, tags: ['mysql'], _mysql: "{{ MYSQL }}" }
 
