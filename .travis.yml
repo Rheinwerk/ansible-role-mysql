@@ -20,9 +20,9 @@ install:
   - ansible --version
 script:
   # Basic role syntax check
+  - "find . -name '*.yml' -print0 | xargs -0 yamllint -c galaxy-yamllint.yaml"
   - cd tests; ansible-playbook test.yml -i inventory --syntax-check
-  - cd tests; ./run_tests.sh
-  - dpkg -l | grep mysql
+  # No more checks sensible, because MySQL is already installed in Travis
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

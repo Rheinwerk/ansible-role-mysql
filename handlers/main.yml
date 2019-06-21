@@ -1,8 +1,13 @@
 ---
 
 - name: Stop MySQL
-  service: name=mysql state=stopped
+  systemd:
+    name: mysql
+    state: stopped
+    no_block: yes
 
 - name: Restart MySQL
-  service: name=mysql state=restarted
-
+  service:
+    name: mysql
+    state: restarted
+    no_block: yes
