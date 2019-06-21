@@ -1,10 +1,10 @@
 ---
 language: python
-python: "2.7"
+python: "3.7"
 
 # Use the new container infrastructure
 sudo: required
-dist: trusty
+dist: bionic
 
 # Install ansible
 addons:
