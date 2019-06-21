@@ -32,4 +32,3 @@
 
   roles:
     - { role: ansible-role-mysql, tags: ['mysql'], _mysql: "{{ MYSQL }}" }
-

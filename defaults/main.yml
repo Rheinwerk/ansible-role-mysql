@@ -1,5 +1,4 @@
 ---
-
 _mysql:
   default_config: yes
   listen:

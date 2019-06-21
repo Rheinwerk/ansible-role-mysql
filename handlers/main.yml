@@ -1,5 +1,4 @@
 ---
-
 - name: Stop MySQL
   systemd:
     name: mysql
