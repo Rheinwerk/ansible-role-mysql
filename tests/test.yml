@@ -43,6 +43,7 @@
         - /var/log/mysqld.log
     - name: Debugging
       shell: "dpkg -l | grep mysql"
+      ignore_errors: yes
   roles:
     - { role: ansible-role-mysql, tags: ['mysql'], _mysql: "{{ MYSQL }}" }
 
