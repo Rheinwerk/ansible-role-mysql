@@ -4,56 +4,17 @@
   apt: pkg={{ item }} state=present
   with_items:
     - mysql-server
-    - python-mysqldb
   notify:
     - Restart MySQL
 
 - name: Set binding
-  ini_file: dest=/etc/mysql/my.cnf section=mysqld option={{ item.option }} value={{ item.value }}
+  ini_file:
+    dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
+    section: "mysqld"
+    option: "{{ item.option }}"
+    value: "{{ item.value }}"
   with_items:
-    - { option: bind-address, value: "{{ _mysql.listen.ip }}" }
-    - { option: port, value: "{{ _mysql.listen.port }}" }
+    - { option: "bind-address", value: "{{ _mysql.listen.ip }}" }
+    - { option: "port", value: "{{ _mysql.listen.port }}" }
   notify:
     - Restart MySQL
-
-- name: Check if root password is set
-  shell: echo exit | mysql -u root
-  register: mysql_root_pw
-  failed_when: mysql_root_pw.rc > 1
-  changed_when: False
-  check_mode: no
-
-- name: Check all root accesses
-  command: mysql -NBe 'SELECT Host FROM mysql.user WHERE User = "root" ORDER BY (Host="localhost") ASC'
-  register: mysql_root_hosts
-  failed_when: mysql_root_hosts.rc > 1
-  changed_when: False
-  check_mode: no
-
-- name: Set root password for local access
-  mysql_user: name=root password={{ _mysql.root.password }} login_unix_socket=/var/run/mysqld/mysqld.sock
-  when: mysql_root_pw.rc == 0
-  notify:
-    - Restart MySQL
-
-- name: Set root password for all other accesses
-  mysql_user: name=root password={{ _mysql.root.password }} host={{ item }} login_user=root login_password={{ _mysql.root.password }} login_unix_socket=/var/run/mysqld/mysqld.sock
-  with_items: mysql_root_hosts.stdout_lines
-  when: mysql_root_pw.rc == 0
-  notify:
-    - Restart MySQL
-
-- include: secure_installation.yml
-  notify:
-    - Restart MySQL
-
-- name: Create databases
-  mysql_db: name={{ item.key }} login_user=root login_password={{ _mysql.root.password }} state={{ item.value.state }}
-  with_dict: "{{ _mysql.databases }}"
-
-- name: Create users
-  mysql_user: name={{ item.0.name }} password={{ item.0.password }} host={{ item.1 }} login_user=root login_password={{ _mysql.root.password }} state={{ item.0.state }} priv={{ item.0.privileges|default('') }}
-  with_subelements:
-    - "{{ _mysql.users }}"
-    - hosts
-
