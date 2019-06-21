@@ -6,4 +6,3 @@ _mysql:
     port: 3306
   root:
     password: root
-
