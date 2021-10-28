@@ -3,6 +3,8 @@ mysql
 
 Installs and configures mysql.
 
+[![CI](https://github.com/Rheinwerk/ansible-role-mysql/actions/workflows/ci.yml/badge.svg)](https://github.com/Rheinwerk/ansible-role-mysql/actions/workflows/ci.yml)
+
 Requirements
 ------------
 
