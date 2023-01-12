@@ -3,10 +3,8 @@
   systemd:
     name: mysql
     state: stopped
-    no_block: yes
 
 - name: Restart MySQL
   service:
     name: mysql
     state: restarted
-    no_block: yes
