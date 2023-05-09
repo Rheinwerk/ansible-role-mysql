@@ -1,10 +1,10 @@
 ---
 - name: Stop MySQL
-  systemd:
+  ansible.builtin.systemd:
     name: mysql
     state: stopped
 
 - name: Restart MySQL
-  service:
+  ansible.builtin.service:
     name: mysql
     state: restarted

@@ -1,7 +1,7 @@
 ---
 
 - name: Install MySQL
-  apt:
+  ansible.builtin.apt:
     state: present
     pkg:
       - mysql-server
@@ -9,7 +9,7 @@
     - Restart MySQL
 
 - name: Set binding
-  ini_file:
+  community.general.ini_file:
     dest: "/etc/mysql/mysql.conf.d/mysqld.cnf"
     section: "mysqld"
     option: "{{ item.option }}"
